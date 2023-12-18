@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/theme/style.css" />
+  </head>
+  <body>
+    <div id="page">
+      <div class="container">
+        <div class="main">
+          <h4 class="title font-1"><span>Bundle & Save</span></h4>
+
+          <div class="box-group" onclick="handleRadioClick(event)">
+            <div class="box d-flex align-center font-2 column">
+              <div class="content-box d-flex align-center">
+                <input type="radio" name="radio" id="radio1" />
+                <div
+                  class="full-width d-flex align-center space-between font-2"
+                >
+                  <div class="d-flex column sub-content">
+                    <p class="boxtitle">1 Pair</p>
+                    <p class="price">DKK 195.00</p>
+                  </div>
+                  <p class="discount">50% off</p>
+                </div>
+              </div>
+              <div class="full-width spacing select-box-group1">
+                <div class="size-level d-flex font-1">
+                  <div class="sm-lable">Size</div>
+                  <div class="sm-lable">Color</div>
+                </div>
+
+                <div class="d-flex column select-box data-input1"></div>
+              </div>
+            </div>
+
+            <div class="box d-flex align-center font-2 column">
+              <div class="content-box d-flex align-center">
+                <input type="radio" name="radio" id="radio2" />
+                <div
+                  class="full-width d-flex align-center space-between font-2"
+                >
+                  <div class="d-flex column sub-content">
+                    <p class="price">DKK 345.00</p>
+                  </div>
+
+                  <div class="d-flex overline-box">
+                      <p class="overline"><s>DKK 195.00</s></p>
+                    <div class="d-flex column flex-end">
+                      <p class="popular">Most Popular</p>
+                      <p class="price1">40% off</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="full-width spacing select-box-group2">
+                <div class="size-level d-flex font-1">
+                  <div class="sm-lable">Size</div>
+                  <div class="sm-lable">Color</div>
+                </div>
+
+                <div class="d-flex column select-box data-input2"></div>
+              </div>
+            </div>
+
+            <div class="box d-flex align-center font-2 column">
+              <div class="content-box d-flex align-center">
+                <input type="radio" name="radio" id="radio3" />
+                <div
+                  class="full-width d-flex align-center space-between font-2"
+                >
+                  <div class="d-flex column sub-content">
+                    <p class="boxtitle">3 Pair</p>
+                    <p class="price">DKK 528.00</p>
+                  </div>
+                  <p class="discount">60% off</p>
+                </div>
+              </div>
+
+              <div class="full-width spacing select-box-group3">
+                <div class="size-level d-flex font-1">
+                  <div class="sm-lable">Size</div>
+                  <div class="sm-lable">Color</div>
+                </div>
+
+                <div class="d-flex column select-box data-input3"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="full-width d-flex align-center space-between font-1">
+            <p class="free blod">Free 2 Day Shipping</p>
+            <p class="total">Total : <span class="bold">DKK 360.00</span></p>
+          </div>
+
+          <button type="button">+ Add to Cart</button>
+          <div class="d-flex flex-end copywrite font-1">
+            <p>&copy;<i>Powered by Pumper</i></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const radios = ["radio1", "radio2", "radio3"];
+      const RADIO_MAP = {
+        radio1: [".data-input1", 1, ".select-box-group1"],
+        radio2: [".data-input2", 2, ".select-box-group2"],
+        radio3: [".data-input3", 3, ".select-box-group3"],
+      };
+      const boxGroup = document.querySelector(".select-box-group1");
+      const boxGroup2 = document.querySelector(".select-box-group2");
+      const boxGroup3 = document.querySelector(".select-box-group3");
+
+      //resetting display of boxes
+      resetDisplay();
+
+      function resetDisplay() {
+        boxGroup.style.display = "none";
+        boxGroup2.style.display = "none";
+        boxGroup3.style.display = "none";
+      }
+
+      function generateSelectBoxes(groupClassName, num) {
+        const selectBoxGroup = document.querySelector(groupClassName);
+        let selectBoxesHTML = "";
+
+        for (let i = 1; i <= num; i++) {
+          selectBoxesHTML += `
+            <div class="d-flex align-center full-width font-1">
+              <label>${i}#</label>
+              <div class="d-flex align-center select-box">
+                <div>
+                  <select name="size" id="size" class="size">
+                    <option value="s">S</option>
+                    <option value="m">M</option>
+                    <option value="l">L</option>
+                    <option value="xl">XL</option>
+                  </select>
+                </div>
+                <div>
+                  <select name="color" id="color" class="colour">
+                    <option value="Color">Colour</option>
+                    <option value="Black">Black</option>
+                    <option value="Red">Red</option>
+                    <option value="blue">Blue</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        selectBoxGroup.innerHTML = selectBoxesHTML;
+      }
+
+      function handleRadioClick(e) {
+        if (e.target.type === "radio") {
+          let radioId = e.target.id;
+          const selectedRadio = document.getElementById(radioId);
+          const allBoxes = document.querySelectorAll(".box");
+          allBoxes.forEach((box) => {
+            box.classList.remove("active-box");
+          });
+          selectedRadio.closest(".box").classList.add("active-box");
+          resetDisplay();
+          radios.forEach((radio) => {
+            if (radio === radioId) {
+              const dataInput = RADIO_MAP[radio][0];
+              const value = RADIO_MAP[radio][1];
+              const selectedGroup = RADIO_MAP[radio][2];
+              generateSelectBoxes(dataInput, value);
+              const boxGroup = document.querySelector(selectedGroup);
+              boxGroup.style.display = "block";
+            }
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
